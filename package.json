@@ -10,7 +10,7 @@
     "dev": "nodemon server.js"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=17.0.0"
   },
   "keywords": [],
   "author": "",

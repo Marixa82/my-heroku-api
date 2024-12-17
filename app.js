@@ -5,9 +5,15 @@ import "dotenv/config";
 // import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express"; 
 import { authRouter } from "./routes/auth-router.js";
-import swaggerDocument from "./swagger.json";
-// import path from 'path';
+// import swaggerDocument from './swagger.json' assert { type: 'json' };
+import fs from 'fs';
+import path from 'path';
 
+// import swaggerDocument from "./swagger.json" ;
+// import { assert } from "joi";
+// import path from 'path';
+// const swaggerDocument = require('./swagger.json');
+const swaggerDocument = JSON.parse(fs.readFileSync(path.resolve('./swagger.json'), 'utf-8'));
 // const swaggerDocument = require(path.resolve('./swagger.json'));
 
 const app = express();
