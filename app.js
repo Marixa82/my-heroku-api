@@ -22,7 +22,7 @@ app.use("/api/auth", authRouter);
 app.get("/", (req, res) => {
   res.send("Hello from Heroku!");
 });
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 console.log('Swagger docs are available at /api-docs');
 
 app.use((_, res) => {
