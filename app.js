@@ -2,10 +2,10 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import "dotenv/config";
-import swaggerJSDoc from "swagger-jsdoc";
+// import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express"; 
 import { authRouter } from "./routes/auth-router.js";
-
+import swaggerDocument from "./swagger.json"
 
 const app = express();
 
@@ -19,7 +19,8 @@ app.use("/api/auth", authRouter);
 app.get("/", (req, res) => {
   res.send("Hello from Heroku!");
 });
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJSDoc))
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+console.log('Swagger docs are available at /api-docs');
 
 app.use((_, res) => {
   res.status(404).json({ message: "Route not found" });
