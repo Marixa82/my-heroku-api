@@ -6,6 +6,7 @@ import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express"; 
 import { authRouter } from "./routes/auth-router.js";
 
+
 const app = express();
 
 app.use(morgan("tiny"));
@@ -15,7 +16,9 @@ app.use(express.static("public"));
 app.use("/api/auth", authRouter);
 // app.use("/api/waters", waterRouter);
 // app.use("/api/user", userRouter);
-
+app.get("/", (req, res) => {
+  res.send("Hello from Heroku!");
+});
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJSDoc))
 
 app.use((_, res) => {
@@ -32,9 +35,7 @@ export default app;
 // const app = express();
 // const PORT = process.env.PORT || 3000;
 
-// app.get("/", (req, res) => {
-//   res.send("Hello from Heroku!");
-// });
+
 
 // app.listen(PORT, () => {
 //   console.log(`Server is running on port ${PORT}`);

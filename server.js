@@ -1,18 +1,40 @@
 import mongoose from "mongoose";
 import app from "./app.js";
+import dotenv from "dotenv";
+dotenv.config();
+
+
 
 const { MONGO_URI, PORT} = process.env
 
-mongoose.connect(MONGO_URI)
-    .then(() => {
-        app.listen(PORT || 4000, () => {
-            console.log(`Database connection successful`)
+console.log("MONGO_URI:", MONGO_URI);
+
+if (!MONGO_URI) {
+  console.error("Error: MONGO_URI is not defined.");
+  process.exit(1);  
+}
+mongoose.connect(MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => {
+            app.listen(PORT || 4000, () => {
+                console.log(`Database connection successful`)
+            })
         })
-    })
-    .catch(error => {
-        console.log(error.message);
-        process.exit(1);
-    })
+  .catch((err) => console.error('MongoDB connection error:', err));
+
+// const uri = process.env.MONGODB_URI;
+// mongoose.connect(MONGO_URI)
+//     .then(() => {
+//         app.listen(PORT || 4000, () => {
+//             console.log(`Database connection successful`)
+//         })
+//     })
+//     .catch(error => {
+//         console.log(error.message);
+//         process.exit(1);
+//     })
 // const express = require("express");
 // const mongoose = require("mongoose");
 // const dotenv = require("dotenv");

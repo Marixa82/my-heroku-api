@@ -5,7 +5,7 @@ import { loginController, registerController, logoutController } from "../contro
 import authValidation from "../middlewares/authValidation.js";
 export const authRouter = express.Router();
 
-// authRouter.get("/verify/:verificationCode", ctrlWrapper(verifyEmailController));
+authRouter.get("/verify/:verificationCode", ctrlWrapper(verifyEmailController));
 // authRouter.post(
 //   "/verify",
 //   validateBody(emailSchema),
