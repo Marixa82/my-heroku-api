@@ -1,24 +1,23 @@
 import express from "express";
-import { validateBody, ctrlWrapper } from "../helpers/index.js";
-import { registerSchema} from "../models/user-model.js";
-import { loginController, registerController, logoutController } from "../controllers/auth-controller.js";
-import authValidation from "../middlewares/authValidation.js";
+import { validateBody } from "../helpers/index.js";
+import { registerSchema, emailSchema} from "../models/user-model.js";
+import authController from "../controllers/authController.js";
+import { isEmptyBody, authValidation, upload } from "../middlewares/index.js";
 export const authRouter = express.Router();
 
-// authRouter.get("/verify/:verificationCode", ctrlWrapper(verifyEmailController));
-// authRouter.post(
-//   "/verify",
-//   validateBody(emailSchema),
-//   ctrlWrapper(resendVerifyEmailController)
-// );
+const userRegisterValidate = validateBody(registerSchema);
+const userEmailValidate = validateBody(emailSchema);
+
+authRouter.get("/verify/:verificationCode", authController.verifyEmailController);
+authRouter.post("/verify", userEmailValidate, authController.resendVerifyEmailController)
+
 authRouter.post(
-  "/register",
-  validateBody(registerSchema),
-  ctrlWrapper(registerController)
+  "/register", upload.single("avatar"), isEmptyBody, userRegisterValidate,
+  authController.registerController
 );
 authRouter.post(
   "/login",
-  validateBody(registerSchema),
-  ctrlWrapper(loginController)
+  userRegisterValidate,
+  authController.loginController
 );
-authRouter.post("/logout", authValidation, ctrlWrapper(logoutController));
+authRouter.post("/logout", authValidation, authController.logoutController);
