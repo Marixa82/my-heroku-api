@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { handleSaveError, runValidatorAtUpdate } from "../bd/hooks.js";
 import Joi from "joi";
 
 const userSchema = new Schema(
@@ -33,19 +34,13 @@ const userSchema = new Schema(
         type: String,
         default: "",
       },
-      waterRate: {
-        type: Number,
-        default: 2000,
-      },
-      gender: {
-        type: String,
-        enum: ["male", "female", ""],
-        default: "",
-      },
     },
   
     { versionKey: false, timestamps: true }
   );
+  userSchema.post("save", handleSaveError);
+  userSchema.pre("findOneAndUpdate", runValidatorAtUpdate);
+  userSchema.post("findOneAndUpdate", handleSaveError);
   
   export const User = model("auth", userSchema);
   
