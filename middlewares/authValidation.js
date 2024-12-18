@@ -1,7 +1,8 @@
-import { HttpError } from '../helpers/index.js';
+import { HttpError, ctrlWrapper } from '../helpers/index.js';
 import { User } from '../models/user-model.js';
 import jwt from 'jsonwebtoken'
 import 'dotenv/config';
+
 
 const { JWT_SECRET } = process.env;
 
@@ -25,4 +26,4 @@ const authValidation = async (req, res, next) => {
         next(HttpError(401, "Not authorized"))
     }
 }
-export default authValidation;
+export default ctrlWrapper(authValidation);
